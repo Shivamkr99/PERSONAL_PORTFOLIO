@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - My Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Modal overlay animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .modal-overlay {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        /* Modal content animation */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-content {
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        /* Custom scrollbar */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        textarea::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 10px;
+        }
+        
+        textarea::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+        
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+    </style>
+</head>
+<body class="bg-[#1a1a1a] min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Contact Modal -->
+    <div class="modal-overlay fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        
+        <!-- Modal Content -->
+        <div class="modal-content relative bg-[#1f1f1f] rounded-2xl w-full max-w-2xl p-8 md:p-12 mx-4">
+            
+            <!-- Close Button -->
+            <button class="absolute top-6 right-6 text-white/60 hover:text-white transition-colors text-2xl leading-none">
+                ✕
+            </button>
+            
+            <!-- Title Section -->
+            <div class="mb-8">
+                <h1 class="text-white text-5xl md:text-6xl font-black uppercase leading-tight mb-4">
+                    GET IN<br>TOUCH
+                </h1>
+                <p class="text-white/80 text-sm md:text-base leading-relaxed">
+                    I'd love to hear from you, whether you just want to shoot the breeze or if you're interested in my work and want to discuss a potential opportunity to achieve great things together!
+                </p>
+            </div>
+            
+            <!-- Contact Form -->
+            <form class="space-y-4">
+                
+                <!-- Name Input -->
+                <div>
+                    <input 
+                        type="text" 
+                        placeholder="Your name" 
+                        class="w-full bg-[#2a2a2a] text-white placeholder-white/40 px-5 py-4 rounded-lg border-2 border-transparent focus:border-[#e67e22] focus:outline-none transition-all text-sm"
+                        required
+                    >
+                </div>
+                
+                <!-- Email Input -->
+                <div>
+                    <input 
+                        type="email" 
+                        placeholder="Your email address" 
+                        class="w-full bg-[#2a2a2a] text-white placeholder-white/40 px-5 py-4 rounded-lg border-2 border-transparent focus:border-[#e67e22] focus:outline-none transition-all text-sm"
+                        required
+                    >
+                </div>
+                
+                <!-- Message Textarea -->
+                <div>
+                    <textarea 
+                        placeholder="Add a message" 
+                        rows="5" 
+                        class="w-full bg-[#2a2a2a] text-white placeholder-white/40 px-5 py-4 rounded-lg border-2 border-transparent focus:border-[#e67e22] focus:outline-none transition-all resize-none text-sm"
+                        required
+                    ></textarea>
+                </div>
+                
+                <!-- Submit Button -->
+                <div>
+                    <button 
+                        type="submit" 
+                        class="w-full bg-[#e67e22] hover:bg-[#d35400] text-black font-black text-lg uppercase py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                        SEND
+                    </button>
+                </div>
+                
+            </form>
+            
+            <!-- Profile Images at Bottom -->
+            <div class="flex justify-center items-center gap-3 mt-8">
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white/20">
+                    <img src="profile1.jpg" alt="Profile" class="w-full h-full object-cover bg-gray-700">
+                </div>
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-[#e67e22]">
+                    <img src="profile2.jpg" alt="Profile" class="w-full h-full object-cover bg-[#e67e22]">
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <script>
+        // Close modal functionality
+        document.querySelector('button').addEventListener('click', function() {
+            // Add your close modal logic here
+            console.log('Close button clicked');
+        });
+        
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            console.log('Form submitted');
+        });
+    </script>
+    
+</body>
+</html>

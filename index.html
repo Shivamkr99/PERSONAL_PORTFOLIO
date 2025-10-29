@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivam Kumar - Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-image: url('Background (1).png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+        
+        /* Navbar backdrop blur effect */
+        .navbar-blur {
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+        }
+        
+        /* Side text rotation - LEFT DEVELOPER */
+        .side-text-left {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            height: auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            z-index: 40;
+            pointer-events: none;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+        
+        .side-text-left .developer-text {
+            font-size: clamp(6rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            color: rgba(160, 160, 160, 0.15);
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        
+        /* Side text rotation - RIGHT PHOTOGRAPHER */
+        .side-text-right {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            height: auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            z-index: 40;
+            pointer-events: none;
+            writing-mode: vertical-rl;
+            transform: rotate(0deg);
+        }
+        
+        .side-text-right .photographer-text {
+            font-size: clamp(6rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            color: rgba(160, 160, 160, 0.15);
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        
+        /* Hide side texts on mobile and small tablets */
+        @media (max-width: 1024px) {
+            .side-text-left,
+            .side-text-right {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        .animate-left {
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+        
+        /* Arc circles */
+        .arc {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid;
+            top: 50%;
+            left: 50%;
+        }
+        
+        .arc1 {
+            width: 480px;
+            height: 480px;
+            border-color: transparent #e67e22 #e67e22 transparent;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .arc2 {
+            width: 510px;
+            height: 510px;
+            border-color: #a4f526 transparent transparent #a4f526;
+            transform: translate(-50%, -50%) rotate(-75deg);
+        }
+        
+        .arc3 {
+            width: 540px;
+            height: 540px;
+            border-color: transparent transparent #3498db #3498db;
+            transform: translate(-50%, -50%) rotate(-15deg);
+        }
+        
+        /* Skills box blur */
+        .skills-blur {
+            backdrop-filter: blur(15px) saturate(200%);
+        }
+        
+        /* Background Hero Title */
+        .hero-bg-title {
+            position: absolute;
+            top: 8%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .hero-bg-title .kumar {
+            margin-left: 370px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-overlay {
+            backdrop-filter: blur(5px);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal.active .modal-overlay {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal.active .modal-content {
+            animation: modalSlideUp 0.4s ease-out;
+        }
+        
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        textarea::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 10px;
+        }
+        
+        textarea::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+        
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+        
+        /* Loading spinner for form submission */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0,0,0,0.3);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Quotes Section Styles */
+        .quotes-section {
+            background: linear-gradient(to bottom, 
+                rgba(17, 17, 17, 0) 0%,
+                rgba(20, 20, 20, 0.5) 5%,
+                rgba(25, 25, 25, 0.75) 10%,
+                rgba(30, 30, 30, 0.9) 15%,
+                #1e1e1e 20%,
+                #1a1a1a 40%,
+                #151515 70%,
+                #101010 100%
+            );
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Grid Pattern */
+        .grid-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(230, 126, 34, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(230, 126, 34, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes gridMove {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50px);
+            }
+        }
+        
+        /* Animated Dots Pattern */
+        .dots-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(164, 245, 38, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: dotsMove 15s linear infinite reverse;
+            pointer-events: none;
+        }
+        
+        @keyframes dotsMove {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                transform: translateX(40px) translateY(40px);
+            }
+        }
+        
+        /* Floating Orbs */
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translate(30px, -30px) scale(1.2);
+                opacity: 0.4;
+            }
+        }
+        
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: floatOrb 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .orb-1 {
+            width: 350px;
+            height: 350px;
+            background: rgba(230, 126, 34, 0.12);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(164, 245, 38, 0.1);
+            top: 50%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 10s;
+        }
+        
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: rgba(52, 152, 219, 0.08);
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 12s;
+        }
+        
+        /* Geometric Shapes */
+        @keyframes rotateShape {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+        
+        .geometric-shape {
+            position: absolute;
+            border: 2px solid rgba(230, 126, 34, 0.12);
+            animation: rotateShape 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        .shape-1 {
+            width: 150px;
+            height: 150px;
+            top: 15%;
+            right: 10%;
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            bottom: 25%;
+            right: 25%;
+            border-radius: 30%;
+            border-color: rgba(164, 245, 38, 0.12);
+            animation-delay: 3s;
+            animation-duration: 15s;
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            top: 40%;
+            left: 15%;
+            border-radius: 20%;
+            border-color: rgba(52, 152, 219, 0.12);
+            animation-delay: 6s;
+            animation-duration: 18s;
+        }
+        
+        /* Lines Pattern */
+        @keyframes linesPulse {
+            0%, 100% {
+                opacity: 0.03;
+            }
+            50% {
+                opacity: 0.08;
+            }
+        }
+        
+        .diagonal-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 35px,
+                rgba(255, 255, 255, 0.02) 35px,
+                rgba(255, 255, 255, 0.02) 70px
+            );
+            animation: linesPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .quote-box {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(80, 80, 80, 0.2);
+            padding: clamp(30px, 5vh, 50px) clamp(20px, 4vw, 80px);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .quote-box:last-child {
+            border-bottom: 1px solid rgba(80, 80, 80, 0.2);
+        }
+        
+        .quote-text {
+            font-size: clamp(2rem, 5.5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: clamp(20px, 4vh, 40px);
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 3;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .quote-text .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 2px #fff;
+            text-stroke: 2px #fff;
+        }
+        
+        .quote-author {
+            font-size: clamp(0.7rem, 1.5vw, 1rem);
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: #aaa;
+            text-transform: uppercase;
+            margin-top: clamp(10px, 2vh, 20px);
+            position: relative;
+            z-index: 3;
+        }
+        
+        /* Footer Styles */
+        .footer-section {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 50%, #c44700 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Copyright Section */
+        .copyright-section {
+            background: #0a0a0a;
+            border-top: 1px solid rgba(230, 126, 34, 0.2);
+        }
+        
+        /* Responsive adjustments */
+        @media (min-width: 1920px) {
+            .side-text-left {
+                left: 40px;
+            }
+            
+            .side-text-right {
+                right: 40px;
+            }
+            
+            .side-text-left .developer-text,
+            .side-text-right .photographer-text {
+                font-size: 9rem;
+            }
+        }
+        
+        @media (max-width: 1440px) {
+            .side-text-left .developer-text,
+            .side-text-right .photographer-text {
+                font-size: clamp(5.5rem, 9vw, 7.5rem);
+                letter-spacing: 0.13em;
+            }
+        }
+        
+        @media (max-width: 1280px) {
+            .side-text-left {
+                left: 15px;
+            }
+            
+            .side-text-right {
+                right: 15px;
+            }
+            
+            .side-text-left .developer-text,
+            .side-text-right .photographer-text {
+                font-size: clamp(5rem, 8.5vw, 7rem);
+                letter-spacing: 0.12em;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .profile-area {
+                transform: translateX(0) !important;
+            }
+            
+            .arc1 { width: 380px; height: 380px; }
+            .arc2 { width: 410px; height: 410px; }
+            .arc3 { width: 440px; height: 440px; }
+            
+            .hero-bg-title {
+                top: 20%;
+            }
+            
+            .hero-bg-title .kumar {
+                margin-left: 80px;
+            }
+            
+            .quote-text {
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .profile-area {
+                flex-direction: column;
+            }
+            
+            .profile-image-container {
+                width: 400px !important;
+                height: 400px !important;
+            }
+            
+            .profile-image-bg {
+                width: 280px !important;
+                height: 330px !important;
+                border-top-left-radius: 140px !important;
+                border-top-right-radius: 140px !important;
+            }
+            
+            .profile-image {
+                width: 310px !important;
+            }
+            
+            .arc1 { width: 320px; height: 320px; }
+            .arc2 { width: 350px; height: 350px; }
+            .arc3 { width: 380px; height: 380px; }
+            
+            .hero-bg-title {
+                font-size: 12vw !important;
+                top: 22%;
+            }
+            
+            .hero-bg-title .kumar {
+                margin-left: 40px;
+            }
+            
+            .quote-text {
+                font-size: clamp(1.5rem, 4.5vw, 3rem);
+            }
+            
+            .quote-text .outline-text {
+                -webkit-text-stroke: 1.5px #fff;
+                text-stroke: 1.5px #fff;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .profile-image-container {
+                width: 350px !important;
+                height: 350px !important;
+            }
+            
+            .profile-image-bg {
+                width: 250px !important;
+                height: 300px !important;
+                border-top-left-radius: 125px !important;
+                border-top-right-radius: 125px !important;
+            }
+            
+            .profile-image {
+                width: 280px !important;
+            }
+            
+            .arc1 { width: 280px; height: 280px; }
+            .arc2 { width: 310px; height: 310px; }
+            .arc3 { width: 340px; height: 340px; }
+        }
+        
+        @media (max-width: 480px) {
+            .profile-image-container {
+                width: 300px !important;
+                height: 300px !important;
+            }
+            
+            .profile-image-bg {
+                width: 220px !important;
+                height: 260px !important;
+                border-top-left-radius: 110px !important;
+                border-top-right-radius: 110px !important;
+            }
+            
+            .profile-image {
+                width: 240px !important;
+            }
+            
+            .arc1 { width: 250px; height: 250px; }
+            .arc2 { width: 280px; height: 280px; }
+            .arc3 { width: 310px; height: 310px; }
+            
+            .hero-bg-title {
+                font-size: 15vw !important;
+                top: 8%;
+            }
+            
+            .hero-bg-title .kumar {
+                margin-left: 0px;
+            }
+            
+            .quote-text {
+                font-size: clamp(1.3rem, 4vw, 2.5rem);
+            }
+            
+            .quote-text .outline-text {
+                -webkit-text-stroke: 1px #fff;
+                text-stroke: 1px #fff;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .profile-image-container {
+                width: 280px !important;
+                height: 280px !important;
+            }
+            
+            .profile-image-bg {
+                width: 200px !important;
+                height: 240px !important;
+                border-top-left-radius: 100px !important;
+                border-top-right-radius: 100px !important;
+            }
+            
+            .profile-image {
+                width: 220px !important;
+            }
+            
+            .arc1 { width: 230px; height: 230px; }
+            .arc2 { width: 260px; height: 260px; }
+            .arc3 { width: 290px; height: 290px; }
+        }
+    </style>
+</head>
+<body class="m-0 p-0 min-h-screen bg-[#111] text-white overflow-x-hidden pt-16">
+    
+    <!-- Background Overlay -->
+    <div class="fixed top-0 left-0 w-full h-full -z-10" style="background-image: linear-gradient(to right, rgba(30, 30, 30, 0.7), rgba(30, 30, 30, 0.2) 25%, rgba(30, 30, 30, 0.2) 75%, rgba(30, 30, 30, 0.7));"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-blur fixed top-0 left-0 w-full h-16 flex justify-between items-center px-4 sm:px-6 md:px-10 z-50 bg-[rgba(30,30,30,0.4)] border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
+        <a href="index.html" class="flex items-center relative h-16 no-underline">
+            <!-- Logo Circle -->
+            <div class="absolute -left-2.5 top-1/2 -translate-y-1/2 w-[50px] h-[50px] sm:w-[55px] sm:h-[55px] md:w-[65px] md:h-[65px] bg-[#e67e22] rounded-full z-10"></div>
+            
+            <!-- Brand Text -->
+            <div class="relative z-20 flex flex-col ml-2 leading-none justify-center">
+                <span class="text-[0.85rem] sm:text-[1rem] md:text-[1.2rem] font-bold tracking-[1.5px] leading-[1.3] -mb-0.5 text-white">SHIVAM</span>
+                <span class="text-[0.85rem] sm:text-[1rem] md:text-[1.2rem] font-bold tracking-[1.5px] leading-[1.3] pl-4 sm:pl-5 md:pl-7 text-white">KUMAR</span>
+            </div>
+        </a>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl z-50 w-10 h-10 flex items-center justify-center">
+            <i class="fas fa-bars" id="menuIcon"></i>
+        </button>
+        
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex items-center gap-5 list-none m-0 p-0">
+            <li><a href="index.html" class="text-[#e67e22] no-underline font-semibold text-[0.9rem] transition-colors">HOME</a></li>
+            <li><a href="about.html" class="text-white no-underline font-semibold text-[0.9rem] hover:text-[#e67e22] transition-colors">ABOUT</a></li>
+            <li><a href="projects.html" class="text-white no-underline font-semibold text-[0.9rem] hover:text-[#e67e22] transition-colors">PROJECTS</a></li>
+            <li><a href="myresume.pdf" target="_blank" class="text-white no-underline font-semibold text-[0.9rem] hover:text-[#e67e22] transition-colors">RESUME</a></li>
+            <li><button id="contactBtn" class="bg-[#e67e22] text-white px-4 py-2 rounded font-bold text-[0.9rem] hover:bg-[#d35400] transition-colors uppercase cursor-pointer">CONTACT</button></li>
+        </ul>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobileMenu" class="fixed top-16 left-0 w-full h-[calc(100vh-4rem)] bg-[#1a1a1a] transform translate-x-full transition-transform duration-300 md:hidden overflow-y-auto z-40">
+            <ul class="flex flex-col items-center gap-8 list-none p-8 pt-12">
+                <li><a href="index.html" class="text-[#e67e22] no-underline font-semibold text-[1.2rem] transition-colors">HOME</a></li>
+                <li><a href="about.html" class="text-white no-underline font-semibold text-[1.2rem] hover:text-[#e67e22] transition-colors">ABOUT</a></li>
+                <li><a href="projects.html" class="text-white no-underline font-semibold text-[1.2rem] hover:text-[#e67e22] transition-colors">PROJECTS</a></li>
+                <li><a href="myresume.pdf" target="_blank" class="text-white no-underline font-semibold text-[1.2rem] hover:text-[#e67e22] transition-colors">RESUME</a></li>
+                <li><button id="mobileContactBtn" class="bg-[#e67e22] text-white px-8 py-3 rounded font-bold text-[1rem] hover:bg-[#d35400] transition-colors uppercase cursor-pointer w-full max-w-xs">CONTACT</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative flex flex-col items-center justify-start min-h-screen pt-20 text-center">
+        
+        <!-- SIDE TEXT - DEVELOPER (LEFT) -->
+        <div class="side-text-left">
+            <span class="developer-text">DEVELOPER</span>
+        </div>
+        
+        <!-- SIDE TEXT - PHOTOGRAPHER (RIGHT) -->
+        <div class="side-text-right">
+            <span class="photographer-text">PHOTOGRAPHER</span>
+        </div>
+        
+        <!-- Background Hero Title -->
+        <div class="hero-bg-title animate-up">
+            <div class="text-[clamp(4rem,10vw,8rem)] font-black tracking-tight text-white/70 uppercase leading-[0.85]">
+                SHIVAM
+            </div>
+            <div class="kumar text-[clamp(4rem,10vw,8rem)] font-black tracking-tight text-white/40 uppercase leading-[0.85]">
+                KUMAR
+            </div>
+        </div>
+        
+        <!-- Profile Area -->
+        <div class="profile-area animate-left flex items-center justify-center w-full max-w-[900px] mx-auto relative z-10 translate-x-0 md:translate-x-20 mt-8 md:mt-0 px-4">
+            
+            <!-- Profile Image Container -->
+            <div class="profile-image-container relative flex justify-center items-end w-[550px] h-[590px]">
+            <!-- Arcs -->
+            <div class="arc arc1 z-[1]"></div>
+            <div class="arc arc2 z-[1]"></div>
+            <div class="arc arc3 z-[1]"></div>
+            
+            <!-- Profile Image Background -->
+            <div class="profile-image-bg relative z-[5] w-[430px] h-[490px] bg-[#1c1c1c] rounded-t-[210px] rounded-b-[20px] shadow-[inset_0_0_15px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.5)]">
+                <img src="Shivam.png" alt="Shivam Kumar Profile" class="profile-image absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[530px] z-10">
+            </div>
+            </div>
+            
+            <!-- Skill List -->
+            <div class="text-left space-y-4 pl-[50px] hidden md:block">
+            <!-- RPA Developer Box -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300 w-[180px]">
+                <div class="flex items-center gap-3">
+                <i class="fas fa-robot text-[#e67e22] text-2xl"></i>
+                <div>
+                    <p class="m-0 text-white font-medium">RPA</p>
+                    <p class="m-0 text-white/70 text-sm">DEVELOPER</p>
+                </div>
+                </div>
+            </div>
+
+            <!-- Web Developer Box -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300 w-[180px]">
+                <div class="flex items-center gap-3">
+                <i class="fas fa-code text-[#a4f526] text-2xl"></i>
+                <div>
+                    <p class="m-0 text-white font-medium">WEB</p>
+                    <p class="m-0 text-white/70 text-sm">DEVELOPER</p>
+                </div>
+                </div>
+            </div>
+
+            <!-- Photographer Box -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300 w-[180px]">
+                <div class="flex items-center gap-3">
+                <i class="fas fa-camera text-[#3498db] text-2xl"></i>
+                <div>
+                    <p class="m-0 text-white font-medium">PHOTO</p>
+                    <p class="m-0 text-white/70 text-sm">GRAPHER</p>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- About & Skills Section -->
+        <div id="about-preview" class="flex flex-col items-center w-full max-w-[900px] mx-auto gap-[30px] mt-12 px-4 relative z-10" style="animation: slideUp 0.8s ease-out 0.4s backwards;">
+            
+            <!-- About Me Box -->
+            <div class="bg-[#a4f526] text-[#222] p-[clamp(20px,4vw,30px)] rounded-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex flex-col md:flex-row text-left gap-[clamp(15px,3vw,30px)] w-full items-start md:items-center">
+                <div class="text-[clamp(1.5rem,3vw,1.8rem)] font-black leading-tight min-w-[120px]">
+                    ABOUT<br>MYSELF
+                </div>
+                <div class="text-[clamp(0.85rem,1.5vw,0.95rem)] leading-relaxed font-medium">
+                    I'm <span class="font-bold text-[#333]">Shivam Kumar</span> someone who loves blending tech and creativity to make cool things happen. 
+                    I dive deep into automation, AI, and design, always looking for smarter ways to get things done.
+                    <br><br>
+                    I'm certified in <span class="font-bold text-[#333]">MetaBorg Next</span> and enjoy building sleek, efficient workflows, 
+                    but I'm just as passionate about photography, videography, and managing events that bring people together.
+                    <br><br>
+                    Whether it's capturing a perfect shot or automating a process, I love creating things that make an impact 
+                    (and maybe spark a few smiles along the way).
+                </div>
+            </div>
+            
+            <!-- Skills Box -->
+            <div class="skills-blur bg-[rgba(30,30,30,0.7)] border border-white/15 rounded-[15px] px-[clamp(20px,5vw,40px)] py-[clamp(15px,3vw,20px)] flex flex-wrap justify-around items-center w-full max-w-[600px] gap-4">
+                <i class="fab fa-python text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                <img src="your-s-logo.png" alt="S-logo" class="h-[clamp(2rem,4vw,2.5rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                <i class="fas fa-magic text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                <img src="your-pr-logo.png" alt="Pr-logo" class="h-[clamp(2rem,4vw,2.5rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                <img src="your-ps-logo.png" alt="Ps-logo" class="h-[clamp(2rem,4vw,2.5rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+            </div>
+        </div>
+
+    </section>
+
+    <!-- QUOTES SECTION -->
+    <section id="projects" class="quotes-section w-full">
+        
+        <!-- Animated Background Patterns -->
+        <div class="grid-pattern"></div>
+        <div class="dots-pattern"></div>
+        <div class="diagonal-lines"></div>
+        
+        <!-- Floating Orbs -->
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        
+        <!-- Geometric Shapes -->
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        
+        <!-- Quote 1 -->
+        <div class="quote-box">
+            <div>
+                <div class="quote-text">
+                    YOU'RE EITHER THE ONE THAT CREATES THE <span class="outline-text">AUTOMATION</span> OR YOU ARE GETTING <span class="outline-text">AUTOMATED.</span>
+                </div>
+                <div class="quote-author">
+                    - TOM PRESTON WERNER
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quote 2 -->
+        <div class="quote-box">
+            <div>
+                <div class="quote-text">
+                    GREAT PHOTOGRAPHY IS ABOUT <span class="outline-text">DEPTH OF FEELING,</span> NOT <span class="outline-text">DEPTH OF FIELD.</span>
+                </div>
+                <div class="quote-author">
+                    • PETER ADAMS
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quote 3 -->
+        <div class="quote-box">
+            <div>
+                <div class="quote-text">
+                    DESIGN ISN'T <span class="outline-text">FINISHED</span> UNTIL SOMEONE IS <span class="outline-text">USING</span> IT.
+                </div>
+                <div class="quote-author">
+                    - BRENDA LAUREL
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer-section py-10 sm:py-12 md:py-16 px-4 sm:px-6 md:px-12 relative">
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
+                
+                <!-- About Section -->
+                <div class="space-y-3 md:space-y-4 text-center md:text-left">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-black text-[#111] leading-tight" style="font-style: italic;">
+                        SHIVAM<br>KUMAR
+                    </h2>
+                    <p class="text-[#111] text-xs sm:text-sm md:text-base leading-relaxed font-medium">
+                        A developer and photographer from India, dedicated to creating quality artworks alongside building engaging digital experiences that captivate users.
+                    </p>
+                </div>
+                
+                <!-- Sitemap -->
+                <div class="space-y-3 md:space-y-4 text-center md:text-left">
+                    <h3 class="text-base sm:text-lg md:text-xl font-bold text-[#111] uppercase">Sitemap</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-[#111] hover:text-white transition-colors font-semibold text-xs sm:text-sm md:text-base">Home</a></li>
+                        <li><a href="projects.html" class="text-[#111] hover:text-white transition-colors font-semibold text-xs sm:text-sm md:text-base">Projects</a></li>
+                        <li><a href="about.html" class="text-[#111] hover:text-white transition-colors font-semibold text-xs sm:text-sm md:text-base">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social & Contact -->
+                <div class="space-y-3 md:space-y-4 text-center md:text-left">
+                    <div>
+                        <h3 class="text-xs sm:text-sm md:text-base font-semibold text-[#111] mb-3">Follow me on</h3>
+                        <div class="flex gap-3 sm:gap-4 justify-center md:justify-start">
+                            <a href="https://www.linkedin.com/in/shivam-kumar-8a9906275/" target="_blank" rel="noopener noreferrer" class="text-[#111] hover:text-white transition-colors text-lg sm:text-xl md:text-2xl">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://instagram.com/_shiva.am99" target="_blank" rel="noopener noreferrer" class="text-[#111] hover:text-white transition-colors text-lg sm:text-xl md:text-2xl">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://github.com/Shivamkr99" target="_blank" rel="noopener noreferrer" class="text-[#111] hover:text-white transition-colors text-lg sm:text-xl md:text-2xl">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <button id="footerContactBtn" class="w-full md:w-auto bg-[#111] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-bold text-xs sm:text-sm md:text-base hover:bg-black transition-all duration-300 transform hover:scale-105 uppercase border-2 border-[#111]">
+                        Contact Me
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+
+    <!-- COPYRIGHT SECTION -->
+    <div class="copyright-section py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-12">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-[#e67e22] rounded-full flex items-center justify-center">
+                    <span class="text-white font-black text-xs sm:text-sm">SK</span>
+                </div>
+                <p class="text-white/70 text-xs sm:text-sm md:text-base text-center md:text-left">
+                    © 2025 <span class="font-bold text-white">Shivam Kumar</span>. All rights reserved.
+                </p>
+            </div>
+            <p class="text-white/50 text-[10px] sm:text-xs md:text-sm">
+                Designed & Developed with <span class="text-[#e67e22]">❤</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contactModal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
+        
+        <!-- Modal Overlay -->
+        <div class="modal-overlay absolute inset-0 bg-black/80" id="modalOverlay"></div>
+        
+        <!-- Modal Content -->
+        <div class="modal-content relative bg-[#1f1f1f] rounded-xl w-full max-w-[90%] sm:max-w-md md:max-w-lg p-4 sm:p-5 md:p-8 z-10 max-h-[90vh] overflow-y-auto">
+            
+            <!-- Close Button -->
+            <button id="closeModal" class="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 text-white/60 hover:text-white transition-colors text-xl sm:text-2xl leading-none z-20 w-8 h-8 flex items-center justify-center">
+                ✕
+            </button>
+            
+            <!-- Title Section -->
+            <div class="mb-3 sm:mb-4 md:mb-6 pr-6 sm:pr-8">
+                <h1 class="text-white text-xl sm:text-2xl md:text-4xl font-black uppercase leading-tight mb-1 sm:mb-2 md:mb-3">
+                    GET IN<br>TOUCH
+                </h1>
+                <p class="text-white/80 text-[10px] sm:text-xs md:text-sm leading-relaxed">
+                    I'd love to hear from you, whether you just want to shoot the breeze or if you're interested in my work!
+                </p>
+            </div>
+            
+            <!-- Contact Form -->
+            <form id="contactForm" class="space-y-2 sm:space-y-3">
+                
+                <!-- Name Input -->
+                <div>
+                    <input 
+                        type="text" 
+                        name="name"
+                        placeholder="Your name" 
+                        class="w-full bg-[#2a2a2a] text-white placeholder-white/40 px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-lg border-2 border-transparent focus:border-[#e67e22] focus:outline-none transition-all text-xs sm:text-sm"
+                        required
+                    >
+                </div>
+                
+                <!-- Email Input -->
+                <div>
+                    <input 
+                        type="email" 
+                        name="email"
+                        placeholder="Your email address" 
+                        class="w-full bg-[#2a2a2a] text-white placeholder-white/40 px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-lg border-2 border-transparent focus:border-[#e67e22] focus:outline-none transition-all text-xs sm:text-sm"
+                        required
+                    >
+                </div>
+                
+                <!-- Message Textarea -->
+                <div>
+                    <textarea 
+                        name="message"
+                        placeholder="Add a message" 
+                        rows="3" 
+                        class="w-full bg-[#2a2a2a] text-white placeholder-white/40 px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-lg border-2 border-transparent focus:border-[#e67e22] focus:outline-none transition-all resize-none text-xs sm:text-sm"
+                        required
+                    ></textarea>
+                </div>
+                
+                <!-- Submit Button -->
+                <div>
+                    <button 
+                        type="submit" 
+                        id="submitBtn"
+                        class="w-full bg-[#e67e22] hover:bg-[#d35400] text-black font-black text-xs sm:text-sm md:text-base uppercase py-2 sm:py-2.5 md:py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+                    >
+                        <span id="btnText">SEND</span>
+                        <span id="btnSpinner" class="spinner hidden"></span>
+                    </button>
+                </div>
+                
+                <!-- Success/Error Message -->
+                <div id="formMessage" class="hidden text-center text-sm mt-2"></div>
+                
+            </form>
+            
+        </div>
+        
+    </div>
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const mobileContactBtn = document.getElementById('mobileContactBtn');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('translate-x-full');
+                menuIcon.classList.toggle('fa-bars');
+                menuIcon.classList.toggle('fa-times');
+            });
+            
+            // Close menu when clicking a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                });
+            });
+        }
+        
+        // Get elements
+        const contactBtn = document.getElementById('contactBtn');
+        const footerContactBtn = document.getElementById('footerContactBtn');
+        const contactModal = document.getElementById('contactModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const contactForm = document.getElementById('contactForm');
+        
+        // Ensure modal is hidden on page load
+        contactModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Open modal function
+        function openModal(e) {
+            e.preventDefault();
+            contactModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            if (mobileMenu) {
+                mobileMenu.classList.add('translate-x-full');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+        
+        // Open modal from buttons
+        contactBtn.addEventListener('click', openModal);
+        footerContactBtn.addEventListener('click', openModal);
+        if (mobileContactBtn) {
+            mobileContactBtn.addEventListener('click', openModal);
+        }
+        
+        // Close modal function
+        function closeModalFunc() {
+            contactModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal on X button click
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        // Close modal on overlay click
+        modalOverlay.addEventListener('click', closeModalFunc);
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+                closeModalFunc();
+            }
+        });
+        
+        // Form submission with Web3Forms - FIXED VERSION
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnSpinner = document.getElementById('btnSpinner');
+        const formMessage = document.getElementById('formMessage');
+        
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            btnText.textContent = 'SENDING...';
+            btnSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+            formMessage.classList.add('hidden');
+            
+            // Get form data and convert to JSON
+            const formData = new FormData(contactForm);
+            const object = Object.fromEntries(formData);
+            object.access_key = "8d922672-4860-40ce-9e3b-fd9d52a306e9";
+            const json = JSON.stringify(object);
+            
+            try {
+                // Submit to Web3Forms with JSON
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                });
+                
+                const result = await response.json();
+                
+                // Check if response is OK
+                if (response.ok && result.success) {
+                    // Success
+                    formMessage.textContent = '✓ Message sent successfully! Thank you for reaching out.';
+                    formMessage.className = 'text-center text-sm mt-2 text-[#a4f526] font-semibold';
+                    formMessage.classList.remove('hidden');
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Close modal after 2 seconds
+                    setTimeout(() => {
+                        closeModalFunc();
+                        formMessage.classList.add('hidden');
+                        formMessage.textContent = '';
+                    }, 2000);
+                } else {
+                    // Error from API
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (error) {
+                // Error handling
+                formMessage.textContent = '✗ Failed to send message. Please try again.';
+                formMessage.className = 'text-center text-sm mt-2 text-red-400 font-semibold';
+                formMessage.classList.remove('hidden');
+                console.error('Form submission error:', error);
+                
+                // Hide error message after 5 seconds
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            } finally {
+                // Reset button state
+                btnText.textContent = 'SEND';
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+    
+</body>
+</html>
+    
