@@ -31,6 +31,44 @@
             background-position: center;
             background-attachment: fixed;
             overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+        
+        /* Custom Cursor Ball */
+        .cursor-ball {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-ball.hover-link {
+            width: 50px;
+            height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+        
+        /* Show cursor on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+            .cursor-ball {
+                display: none;
+            }
+        }
+        
+        /* Variable Font for Text Pressure Effect */
+        @font-face {
+            font-family: 'Compressa VF';
+            src: url('https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2');
+            font-style: normal;
         }
         
         /* Navbar backdrop blur effect */
@@ -148,9 +186,10 @@
         /* Skills box blur */
         .skills-blur {
             backdrop-filter: blur(15px) saturate(200%);
+            -webkit-backdrop-filter: blur(15px) saturate(200%);
         }
         
-        /* Background Hero Title */
+        /* Background Hero Title - TEXT PRESSURE EFFECT */
         .hero-bg-title {
             position: absolute;
             top: 8%;
@@ -161,6 +200,18 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+        }
+        
+        .hero-bg-title > div {
+            font-family: 'Compressa VF', 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: space-between;
+            user-select: none;
+        }
+        
+        .hero-bg-title > div span {
+            display: inline-block;
+            transition: opacity 0.1s ease;
         }
         
         .hero-bg-title .kumar {
@@ -685,6 +736,9 @@
 </head>
 <body class="m-0 p-0 min-h-screen bg-[#111] text-white overflow-x-hidden pt-16">
     
+    <!-- Custom Cursor Ball -->
+    <div class="cursor-ball"></div>
+    
     <!-- Background Overlay -->
     <div class="fixed top-0 left-0 w-full h-full -z-10" style="background-image: linear-gradient(to right, rgba(30, 30, 30, 0.7), rgba(30, 30, 30, 0.2) 25%, rgba(30, 30, 30, 0.2) 75%, rgba(30, 30, 30, 0.7));"></div>
 
@@ -740,14 +794,10 @@
             <span class="photographer-text">PHOTOGRAPHER</span>
         </div>
         
-        <!-- Background Hero Title -->
+        <!-- Background Hero Title WITH TEXT PRESSURE EFFECT -->
         <div class="hero-bg-title animate-up">
-            <div class="text-[clamp(4rem,10vw,8rem)] font-black tracking-tight text-white/70 uppercase leading-[0.85]">
-                SHIVAM
-            </div>
-            <div class="kumar text-[clamp(4rem,10vw,8rem)] font-black tracking-tight text-white/40 uppercase leading-[0.85]">
-                KUMAR
-            </div>
+            <div id="textPressureLine1" class="text-[clamp(4rem,10vw,8rem)] font-black tracking-tight text-white/85 uppercase leading-[0.85]"></div>
+            <div id="textPressureLine2" class="kumar text-[clamp(4rem,10vw,8rem)] font-black tracking-tight text-white/65 uppercase leading-[0.85]"></div>
         </div>
         
         <!-- Profile Area -->
@@ -804,7 +854,7 @@
         </div>
 
         <!-- About & Skills Section -->
-        <div id="about-preview" class="flex flex-col items-center w-full max-w-[900px] mx-auto gap-[30px] mt-12 px-4 relative z-10" style="animation: slideUp 0.8s ease-out 0.4s backwards;">
+        <div id="about-preview" class="flex flex-col items-center w-full max-w-[900px] mx-auto gap-[30px] mt-0.5 px-4 relative z-10" style="animation: slideUp 0.8s ease-out 0.4s backwards;">
             
             <!-- About Me Box -->
             <div class="bg-[#a4f526] text-[#222] p-[clamp(20px,4vw,30px)] rounded-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex flex-col md:flex-row text-left gap-[clamp(15px,3vw,30px)] w-full items-start md:items-center">
@@ -814,22 +864,24 @@
                 <div class="text-[clamp(0.85rem,1.5vw,0.95rem)] leading-relaxed font-medium">
                     I'm <span class="font-bold text-[#333]">Shivam Kumar</span> someone who loves blending tech and creativity to make cool things happen. 
                     I dive deep into automation, AI, and design, always looking for smarter ways to get things done.
-                    <br><br>
+                    <br>
                     I'm certified in <span class="font-bold text-[#333]">MetaBorg Next</span> and enjoy building sleek, efficient workflows, 
                     but I'm just as passionate about photography, videography, and managing events that bring people together.
-                    <br><br>
+                    <br>
                     Whether it's capturing a perfect shot or automating a process, I love creating things that make an impact 
                     (and maybe spark a few smiles along the way).
                 </div>
             </div>
             
             <!-- Skills Box -->
-            <div class="skills-blur bg-[rgba(30,30,30,0.7)] border border-white/15 rounded-[15px] px-[clamp(20px,5vw,40px)] py-[clamp(15px,3vw,20px)] flex flex-wrap justify-around items-center w-full max-w-[600px] gap-4">
+            <div class="skills-blur bg-[rgba(30,30,30,0.7)] border border-white/15 rounded-[15px] px-[clamp(20px,5vw,40px)] py-[clamp(15px,3vw,20px)] flex flex-wrap justify-around items-center w-full  gap-4">
                 <i class="fab fa-python text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
-                <img src="your-s-logo.png" alt="S-logo" class="h-[clamp(2rem,4vw,2.5rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
-                <i class="fas fa-magic text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
-                <img src="your-pr-logo.png" alt="Pr-logo" class="h-[clamp(2rem,4vw,2.5rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
-                <img src="your-ps-logo.png" alt="Ps-logo" class="h-[clamp(2rem,4vw,2.5rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                 <img src="java.png" alt="JAVA-logo" class="h-[clamp(2.5rem,4.5vw,3rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                <i class="fab fa-c text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                <i class="fab fa-adobe text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                <img src="ps.png" alt="JAVA-logo" class="h-[clamp(2.5rem,4.5vw,3rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                 <img src="java.png" alt="JAVA-logo" class="h-[clamp(2.5rem,4.5vw,3rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+
             </div>
         </div>
 
@@ -1041,7 +1093,199 @@
         
     </div>
     
-    <script>
+   <script>
+    // =====================================================
+    // CUSTOM CURSOR BALL EFFECT - UPDATED
+    // =====================================================
+    const cursorBall = document.querySelector('.cursor-ball');
+    let mouseX = 0, mouseY = 0;
+    let ballX = 0, ballY = 0;
+    const speed = 1; // Lagging speed (lower = more lag)
+    
+    // Update mouse position
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    // Animate cursor ball with lag effect
+    function animateCursor() {
+        // Calculate distance between ball and mouse
+        const distX = mouseX - ballX;
+        const distY = mouseY - ballY;
+        
+        // Move ball towards mouse with lag
+        ballX += distX * speed;
+        ballY += distY * speed;
+        
+        // Update ball position
+        cursorBall.style.left = ballX + 'px';
+        cursorBall.style.top = ballY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    }
+    
+    animateCursor();
+    
+    // Enlarge cursor on hover over ALL INTERACTIVE ELEMENTS
+    function addHoverEffect() {
+        const hoverElements = document.querySelectorAll(
+            'a, button, input, textarea, select, label, ' +
+            '[role="button"], [onclick], [tabindex]:not([tabindex="-1"]), ' +
+            '.clickable, .hoverable, img, video, ' +
+            '.profile-image, .arc, .skills-blur > *, ' +
+            'nav ul li, .quote-box, i, svg'
+        );
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursorBall.classList.add('hover-link');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursorBall.classList.remove('hover-link');
+            });
+        });
+    }
+    
+    // Initialize hover effects
+    addHoverEffect();
+    
+    // Re-apply hover effects after dynamic content loads
+    setTimeout(addHoverEffect, 1000);
+    
+    // Observer for dynamically added elements
+    const observer = new MutationObserver(() => {
+        addHoverEffect();
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+        
+        // =====================================================
+        // TEXT PRESSURE EFFECT - VANILLA JAVASCRIPT
+        // =====================================================
+        class TextPressure {
+            constructor(element, text, options = {}) {
+                this.element = element;
+                this.text = text;
+                this.chars = text.split('');
+                
+                this.width = options.width !== undefined ? options.width : true;
+                this.weight = options.weight !== undefined ? options.weight : true;
+                this.italic = options.italic !== undefined ? options.italic : true;
+                this.alpha = options.alpha !== undefined ? options.alpha : false;
+                
+                this.mouse = { x: 0, y: 0 };
+                this.cursor = { x: 0, y: 0 };
+                this.spans = [];
+                
+                this.init();
+            }
+            
+            init() {
+                this.element.innerHTML = '';
+                
+                this.chars.forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.style.display = 'inline-block';
+                    this.element.appendChild(span);
+                    this.spans.push(span);
+                });
+                
+                const rect = this.element.getBoundingClientRect();
+                this.mouse.x = rect.left + rect.width / 2;
+                this.mouse.y = rect.top + rect.height / 2;
+                this.cursor.x = this.mouse.x;
+                this.cursor.y = this.mouse.y;
+                
+                this.bindEvents();
+                this.animate();
+            }
+            
+            bindEvents() {
+                window.addEventListener('mousemove', (e) => {
+                    this.cursor.x = e.clientX;
+                    this.cursor.y = e.clientY;
+                });
+                
+                window.addEventListener('touchmove', (e) => {
+                    const touch = e.touches[0];
+                    this.cursor.x = touch.clientX;
+                    this.cursor.y = touch.clientY;
+                }, { passive: false });
+            }
+            
+            dist(a, b) {
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+            
+            animate() {
+                this.mouse.x += (this.cursor.x - this.mouse.x) / 15;
+                this.mouse.y += (this.cursor.y - this.mouse.y) / 15;
+                
+                const rect = this.element.getBoundingClientRect();
+                const maxDist = rect.width / 2;
+                
+                this.spans.forEach(span => {
+                    const spanRect = span.getBoundingClientRect();
+                    const charCenter = {
+                        x: spanRect.x + spanRect.width / 2,
+                        y: spanRect.y + spanRect.height / 2
+                    };
+                    
+                    const d = this.dist(this.mouse, charCenter);
+                    
+                    const getAttr = (distance, minVal, maxVal) => {
+                        const val = maxVal - Math.abs((maxVal * distance) / maxDist);
+                        return Math.max(minVal, val + minVal);
+                    };
+                    
+                    const wdth = this.width ? Math.floor(getAttr(d, 5, 200)) : 100;
+                    const wght = this.weight ? Math.floor(getAttr(d, 100, 900)) : 400;
+                    const italVal = this.italic ? getAttr(d, 0, 1).toFixed(2) : 0;
+                    const alphaVal = this.alpha ? getAttr(d, 0, 1).toFixed(2) : 1;
+                    
+                    span.style.opacity = alphaVal;
+                    span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+                });
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize Text Pressure Effect on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const line1 = document.getElementById('textPressureLine1');
+            const line2 = document.getElementById('textPressureLine2');
+            
+            if (line1 && line2) {
+                new TextPressure(line1, 'SHIVAM', {
+                    width: true,
+                    weight: true,
+                    italic: true,
+                    alpha: false
+                });
+                
+                new TextPressure(line2, 'KUMAR', {
+                    width: true,
+                    weight: true,
+                    italic: true,
+                    alpha: false
+                });
+            }
+        });
+        
+        // =====================================================
+        // MOBILE MENU & MODAL FUNCTIONALITY
+        // =====================================================
+        
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -1117,7 +1361,7 @@
             }
         });
         
-        // Form submission with Web3Forms - FIXED VERSION
+        // Form submission with Web3Forms
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
         const btnSpinner = document.getElementById('btnSpinner');
@@ -1193,4 +1437,3 @@
     
 </body>
 </html>
-    
