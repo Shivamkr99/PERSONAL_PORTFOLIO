@@ -18,6 +18,40 @@
             font-family: 'Montserrat', sans-serif;
         }
         
+        body {
+            cursor: none; /* Hide default cursor */
+        }
+        
+        /* Custom Cursor Ball */
+        .cursor-ball {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-ball.hover-link {
+            width: 50px;
+            height: 50px;
+            background-color: rgb(255, 255, 255);
+        }
+        
+        /* Show cursor on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+            .cursor-ball {
+                display: none;
+            }
+        }
+        
         /* Modal overlay animation */
         @keyframes fadeIn {
             from {
@@ -66,9 +100,142 @@
         textarea::-webkit-scrollbar-thumb:hover {
             background: #666;
         }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* Improve touch targets for mobile */
+            button, input, textarea {
+                min-height: 44px;
+            }
+            
+            /* Optimize modal for tablets */
+            .modal-content {
+                padding: clamp(24px, 6vw, 48px);
+            }
+            
+            /* Larger form inputs for touch */
+            input, textarea {
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            body {
+                font-size: 14px;
+            }
+            
+            /* Optimize modal padding */
+            .modal-content {
+                padding: clamp(20px, 5vw, 32px);
+                max-width: 95%;
+            }
+            
+            /* Adjust title size */
+            .modal-content h1 {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+            
+            .modal-content {
+                padding: 18px;
+            }
+            
+            /* Smaller form inputs */
+            input, textarea {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            
+            /* Optimize button */
+            button[type="submit"] {
+                padding: 14px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            /* Extra small device optimizations */
+            .modal-content {
+                padding: 16px;
+            }
+            
+            input, textarea {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+            
+            button[type="submit"] {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            
+            /* Smaller profile images */
+            .modal-content .w-12 {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            body {
+                font-size: 12px;
+            }
+            
+            .modal-content {
+                padding: 14px;
+            }
+            
+            input, textarea {
+                padding: 9px 12px;
+                font-size: 12px;
+            }
+            
+            button[type="submit"] {
+                padding: 11px;
+                font-size: 0.85rem;
+            }
+            
+            .modal-content h1 {
+                font-size: 1.75rem;
+            }
+        }
+        
+        /* Prevent horizontal overflow */
+        @media (max-width: 1024px) {
+            * {
+                max-width: 100%;
+            }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            /* Increase touch target sizes */
+            button, input, textarea {
+                min-height: 44px;
+            }
+            
+            /* Remove hover effects on touch devices */
+            button:hover {
+                background: #e67e22;
+            }
+            
+            /* Add active states instead */
+            button:active {
+                transform: scale(0.95);
+            }
+        }
     </style>
 </head>
 <body class="bg-[#1a1a1a] min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Custom Cursor Ball -->
+    <div class="cursor-ball"></div>
     
     <!-- Contact Modal -->
     <div class="modal-overlay fixed inset-0 bg-black/80 flex items-center justify-center z-50">
@@ -163,6 +330,61 @@
             // Add your form submission logic here
             console.log('Form submitted');
         });
+        
+        // =====================================================
+        // CUSTOM CURSOR BALL EFFECT
+        // =====================================================
+        const cursorBall = document.querySelector('.cursor-ball');
+        let mouseX = 0, mouseY = 0;
+        let ballX = 0, ballY = 0;
+        const speed = 1; // Lagging speed (lower = more lag)
+        
+        // Update mouse position
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        // Animate cursor ball with lag effect
+        function animateCursor() {
+            // Calculate distance between ball and mouse
+            const distX = mouseX - ballX;
+            const distY = mouseY - ballY;
+            
+            // Move ball towards mouse with lag
+            ballX += distX * speed;
+            ballY += distY * speed;
+            
+            // Update ball position
+            cursorBall.style.left = ballX + 'px';
+            cursorBall.style.top = ballY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        
+        animateCursor();
+        
+        // Enlarge cursor on hover over ALL INTERACTIVE ELEMENTS
+        function addHoverEffect() {
+            const hoverElements = document.querySelectorAll(
+                'a, button, input, textarea, select, label, ' +
+                '[role="button"], [onclick], [tabindex]:not([tabindex="-1"]), ' +
+                '.clickable, .hoverable, img, video, i, svg'
+            );
+            
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursorBall.classList.add('hover-link');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    cursorBall.classList.remove('hover-link');
+                });
+            });
+        }
+        
+        // Initialize hover effects
+        addHoverEffect();
     </script>
     
 </body>

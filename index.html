@@ -145,12 +145,262 @@
             }
         }
         
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-180deg) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0deg) scale(1);
+            }
+        }
+        
+        /* Animation classes */
         .animate-up {
             animation: slideUp 0.8s ease-out;
         }
         
         .animate-left {
-            animation: slideUp 0.8s ease-out 0.2s backwards;
+            animation: slideInLeft 0.8s ease-out 0.2s backwards;
+        }
+        
+        .animate-right {
+            animation: slideInRight 0.8s ease-out 0.2s backwards;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .animate-scale-in {
+            animation: scaleIn 0.6s ease-out;
+        }
+        
+        .animate-bounce-in {
+            animation: bounceIn 0.8s ease-out;
+        }
+        
+        .animate-rotate-in {
+            animation: rotateIn 0.8s ease-out;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        /* Stagger delays */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-800 { animation-delay: 0.8s; }
+        
+        /* Hover animations */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hover-grow {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-grow:hover {
+            transform: scale(1.05);
+        }
+        
+        .hover-glow {
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.6);
+        }
+        
+        /* Skills Loop Animation */
+        .skills-loop-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: clamp(15px, 3vw, 20px) 0;
+            backdrop-filter: blur(15px) saturate(200%);
+            -webkit-backdrop-filter: blur(15px) saturate(200%);
+        }
+        
+        .skills-loop-container::before,
+        .skills-loop-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: clamp(40px, 8%, 100px);
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .skills-loop-container::before {
+            left: 0;
+            background: linear-gradient(
+                to right,
+                rgba(30, 30, 30, 0.7) 0%,
+                rgba(30, 30, 30, 0) 100%
+            );
+        }
+        
+        .skills-loop-container::after {
+            right: 0;
+            background: linear-gradient(
+                to left,
+                rgba(30, 30, 30, 0.7) 0%,
+                rgba(30, 30, 30, 0) 100%
+            );
+        }
+        
+        .skills-loop-track {
+            display: flex;
+            width: max-content;
+            will-change: transform;
+            user-select: none;
+            animation: skillsScroll 20s linear infinite;
+        }
+        
+        .skills-loop-container:hover .skills-loop-track {
+            animation-play-state: paused;
+        }
+        
+        .skills-loop-list {
+            display: flex;
+            align-items: center;
+            gap: clamp(30px, 5vw, 50px);
+            padding: 0 clamp(20px, 4vw, 40px);
+        }
+        
+        .skills-loop-list i,
+        .skills-loop-list img {
+            flex-shrink: 0;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .skills-loop-list i:hover,
+        .skills-loop-list img:hover {
+            transform: scale(1.2);
+        }
+        
+        @keyframes skillsScroll {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
+        
+        /* Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .skills-loop-track {
+                animation: none !important;
+            }
         }
         
         /* Arc circles */
@@ -488,7 +738,7 @@
             justify-content: center;
             align-items: center;
             border-top: 1px solid rgba(80, 80, 80, 0.2);
-            padding: clamp(30px, 5vh, 50px) clamp(20px, 4vw, 80px);
+            padding: clamp(10px, 2vh, 18px) clamp(20px, 4vw, 80px);
             text-align: center;
             position: relative;
             z-index: 10;
@@ -624,6 +874,9 @@
             
             .profile-image {
                 width: 310px !important;
+                height: auto !important;
+                object-fit: contain !important;
+                max-height: 350px !important;
             }
             
             .arc1 { width: 320px; height: 320px; }
@@ -647,6 +900,12 @@
                 -webkit-text-stroke: 1.5px #fff;
                 text-stroke: 1.5px #fff;
             }
+            
+            /* Improve touch targets for mobile */
+            button, a {
+                min-height: 44px;
+                min-width: 44px;
+            }
         }
         
         @media (max-width: 640px) {
@@ -664,11 +923,19 @@
             
             .profile-image {
                 width: 280px !important;
+                height: auto !important;
+                object-fit: contain !important;
+                max-height: 320px !important;
             }
             
             .arc1 { width: 280px; height: 280px; }
             .arc2 { width: 310px; height: 310px; }
             .arc3 { width: 340px; height: 340px; }
+            
+            /* Ensure skills box icons are properly sized */
+            .skills-blur {
+                padding: clamp(15px, 4vw, 30px) clamp(15px, 4vw, 30px);
+            }
         }
         
         @media (max-width: 480px) {
@@ -686,6 +953,9 @@
             
             .profile-image {
                 width: 240px !important;
+                height: auto !important;
+                object-fit: contain !important;
+                max-height: 280px !important;
             }
             
             .arc1 { width: 250px; height: 250px; }
@@ -705,9 +975,18 @@
                 font-size: clamp(1.3rem, 4vw, 2.5rem);
             }
             
+            .quote-box {
+                padding: clamp(8px, 1.5vh, 12px) clamp(15px, 3vw, 40px) !important;
+            }
+            
             .quote-text .outline-text {
                 -webkit-text-stroke: 1px #fff;
                 text-stroke: 1px #fff;
+            }
+            
+            /* Optimize for smaller screens */
+            body {
+                font-size: 14px;
             }
         }
         
@@ -726,12 +1005,98 @@
             
             .profile-image {
                 width: 220px !important;
+                height: auto !important;
+                object-fit: contain !important;
+                max-height: 260px !important;
             }
             
             .arc1 { width: 230px; height: 230px; }
             .arc2 { width: 260px; height: 260px; }
             .arc3 { width: 290px; height: 290px; }
+            
+            /* Extra small device optimizations */
+            .skills-blur {
+                gap: 0.75rem;
+            }
+            
+            .quote-text {
+                font-size: clamp(1.2rem, 3.8vw, 2.2rem);
+                padding: 0 0.5rem;
+            }
         }
+        
+        /* Extra small devices (320px and below) */
+        @media (max-width: 320px) {
+            .profile-image-container {
+                width: 260px !important;
+                height: 260px !important;
+            }
+            
+            .profile-image-bg {
+                width: 180px !important;
+                height: 220px !important;
+                border-top-left-radius: 90px !important;
+                border-top-right-radius: 90px !important;
+            }
+            
+            .profile-image {
+                width: 200px !important;
+                height: auto !important;
+                object-fit: contain !important;
+                max-height: 240px !important;
+            }
+            
+            .arc1 { width: 210px; height: 210px; }
+            .arc2 { width: 240px; height: 240px; }
+            .arc3 { width: 270px; height: 270px; }
+            
+            .skills-blur {
+                padding: 12px 15px;
+                gap: 0.5rem;
+            }
+            
+            .quote-text {
+                font-size: clamp(1.1rem, 3.5vw, 2rem);
+            }
+            
+            /* Ensure minimum readable text size */
+            body {
+                font-size: 13px;
+            }
+        }
+        
+        /* Prevent horizontal overflow on all screen sizes */
+        @media (max-width: 1024px) {
+            * {
+                max-width: 100%;
+            }
+            
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            /* Increase touch target sizes */
+            button, a, input, select, textarea {
+                min-height: 44px;
+            }
+            
+            /* Remove hover effects on touch devices */
+            .skill-card:hover,
+            .project-card:hover {
+                transform: none;
+            }
+            
+            /* Add active states instead */
+            .skill-card:active,
+            .project-card:active {
+                transform: scale(0.98);
+            }
+        }
+
     </style>
 </head>
 <body class="m-0 p-0 min-h-screen bg-[#111] text-white overflow-x-hidden pt-16">
@@ -865,7 +1230,7 @@
                     I'm <span class="font-bold text-[#333]">Shivam Kumar</span> someone who loves blending tech and creativity to make cool things happen. 
                     I dive deep into automation, AI, and design, always looking for smarter ways to get things done.
                     <br>
-                    I'm certified in <span class="font-bold text-[#333]">MetaBorg Next</span> and enjoy building sleek, efficient workflows, 
+                    I'm certified in <span class="font-bold text-[#333]">UiPath</span> and enjoy building sleek, efficient workflows, 
                     but I'm just as passionate about photography, videography, and managing events that bring people together.
                     <br>
                     Whether it's capturing a perfect shot or automating a process, I love creating things that make an impact 
@@ -873,15 +1238,30 @@
                 </div>
             </div>
             
-            <!-- Skills Box -->
-            <div class="skills-blur bg-[rgba(30,30,30,0.7)] border border-white/15 rounded-[15px] px-[clamp(20px,5vw,40px)] py-[clamp(15px,3vw,20px)] flex flex-wrap justify-around items-center w-full  gap-4">
-                <i class="fab fa-python text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
-                <img src="java.png" alt="Java logo" class="h-[clamp(2.5rem,4.5vw,3rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
-                <i class="fab fa-c text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
-                <i class="fab fa-adobe text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
-                <i class="fas fa-palette text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Photoshop"></i>
-                <i class="fas fa-image text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Lightroom"></i>
-
+            
+            <!-- Skills Box with Looping Animation -->
+            <div class="skills-loop-container">
+                <div class="skills-loop-track">
+                    <div class="skills-loop-list">
+                        <i class="fab fa-python text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                        <img src="java.png" alt="Java logo" class="h-[clamp(2.5rem,4.5vw,3rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                        <i class="fab fa-js text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                        <i class="fab fa-adobe text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                        <i class="fas fa-palette text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Photoshop"></i>
+                        <i class="fas fa-image text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Lightroom"></i>
+                        <i class="fas fa-camera text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Photography"></i>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="skills-loop-list" aria-hidden="true">
+                        <i class="fab fa-python text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                        <img src="java.png" alt="Java logo" class="h-[clamp(2.5rem,4.5vw,3rem)] w-auto drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+                        <i class="fab fa-js text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                        <i class="fab fa-adobe text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]"></i>
+                        <i class="fas fa-palette text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Photoshop"></i>
+                        <i class="fas fa-image text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Lightroom"></i>
+                        <i class="fas fa-camera text-[clamp(2rem,4vw,2.5rem)] text-white/70 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]" title="Photography"></i>
+                    </div>
+                </div>
             </div>
         </div>
 
